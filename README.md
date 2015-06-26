@@ -12,7 +12,7 @@ Once the main code are loaded just input:
 
 	julia > Stokes(n,nSteps)
 
-where ***n*** (blank: 10) is the dimension of the mesh (n)x(n) with Q2Q1-elements. Each element contains ***ppe*** particles for each one and ***nSteps*** (blank: 20) are the time steps.
+where ***n*** is the dimension of the mesh (n)x(n) with Q2Q1-elements. Each element contains ***ppe*** particles for each one and ***nSteps*** are the time steps.
 
 Alternatively:
 
@@ -30,7 +30,7 @@ It is possible to recover the final height-plots using:
 
 	julia > recoverdata(n,case,nSteps)
 
-where ***n*** is the dimension of the mesh (n)x(n) (specified in the name of the file) and the ***case*** is 1 for the *Fixed* case and *Air Layer* case.
+where ***n*** is the dimension of the mesh (n)x(n) (specified in the name of the file) and the ***case*** is 1 for the *Fixed* case and 2 for the *Air Layer* case.
 
 ## Modifying the Code
 You can change the following data modifying it in Stokes.jl source code and reloaded the main code *main.jl*:
