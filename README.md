@@ -18,7 +18,7 @@ Alternatively:
 
 	julia > Stokes(n,nSteps,air)
 
-where air adding a layer of air on the top of the domain.
+where ***air*** adding a layer of air on the top of the domain.
 
 ##Output
 
@@ -39,6 +39,6 @@ Warning with these variations, the code is not plenty tested.
 
 - The domain ***x1,x2,y1,y2*** (default: 40x40, mandatory square)
 - The number of particles per element ***ppe*** (default: 30)
-- The position and the radius of the sphere ***pto, radius*** 
+- The position and the radius of the sphere ***pto, radius***
 - The densities ***rho*** and the viscosities ***visc*** (default: (1420,1150), (50,69000))
 - The radius of tolerance ***sradius*** must changes depends on ***n***.
