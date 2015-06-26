@@ -8,21 +8,21 @@ To execute the simulation you must open the Julia's REPL and load the main code:
 
 	julia > include("main.jl")
 
-Once the main code are loaded just input:
+Once the main code is loaded just input:
 
 	julia > Stokes(n,nSteps)
 
-where ***n*** is the dimension of the mesh (n)x(n) with Q2Q1-elements. Each element contains ***ppe*** particles for each one and ***nSteps*** are the time steps.
+where ***n*** is the dimension of the mesh (n)x(n) with Q2Q1-elements. Each element contains ***ppe*** particles and ***nSteps*** are the time steps.
 
 Alternatively:
 
 	julia > Stokes(n,nSteps,air)
 
-where ***air*** adding a layer of air on the top of the domain.
+where ***air*** adds a layer of air on the top of the domain.
 
 ##Output
 
-The output of the two case are one data files on `./results/file.dat` and one figure of the last map of the particles on `./results/figs/fig.png`.
+The output of the two cases are one data files on `./results/file.dat` and one figure of the last map of the particles on `./results/figs/fig.png`.
 
 ## Recover the Data
 
@@ -30,10 +30,10 @@ It is possible to recover the final height-plots using:
 
 	julia > recoverdata(n,case,nSteps)
 
-where ***n*** is the dimension of the mesh (n)x(n) (specified in the name of the file) and the ***case*** is 1 for the *Fixed* case and 2 for the *Air Layer* case.
+where ***n*** is the dimension of the mesh (n)x(n) (specified in the name of the file) and ***case*** is 1 for the *Fixed* case and 2 for the *Air Layer* case.
 
 ## Modifying the Code
-You can change the following data modifying it in Stokes.jl source code and reloaded the main code *main.jl*:
+You can change the following data modifying it in Stokes.jl source code and reloading the main code *main.jl*:
 
 Warning with these variations, the code is not plenty tested.
 
