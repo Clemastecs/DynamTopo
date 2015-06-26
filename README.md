@@ -41,4 +41,4 @@ Warning with these variations, the code is not plenty tested.
 - The number of particles per element ***ppe*** (default: 30)
 - The position and the radius of the sphere ***pto, radius***
 - The densities ***rho*** and the viscosities ***visc*** (default: (1420,1150), (50,69000))
-- The radius of tolerance ***sradius*** must changes depends on ***n***.
+- The radius of tolerance ***sradius*** must change depending on ***n***.
