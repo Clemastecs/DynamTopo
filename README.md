@@ -1,5 +1,7 @@
 # Dynamical Topography
 
+A workspace to compute a Stokes' model for dynamical topography.
+
 ##Input:
 
 To execute the simulation you must open the Julia's REPL and load the main code:
