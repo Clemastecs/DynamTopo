@@ -1,6 +1,6 @@
 function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
   """
-  		 Solve the 2D-Stokes problem in a square 40x40 of Q2Q1-elements with FEM/Mark-in-Cell.
+  		 This function solves the 2D-Stokes problem in a square 40x40 of Q2Q1-elements with FEM/Mark-in-Cell.
 
   		 	INPUT:
 	    		air:     Boolean to apply the layer
@@ -27,7 +27,7 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
   visc::Array{Float64} = [50 69000 1] # [mantle viscosity, sphere viscosity, air viscosity]
   rho::Array{Float64} = [1420 1150 1] # [mantle density, sphere desnity, air density]
   pto::Array{Float64} = [ 20 10 ] # initial center position of the body
-  radius::Float64 = 1.75 # initial radius of the body
+  radius::Float64 = 3 # initial radius of the body
   ppe::Int64 = 30 # particles per element
 
   # domain [x1,x2]x[y1,y2]
@@ -50,7 +50,7 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
   gap::Float64 = 0.
   if air == true
   		pto[2] = pto[2] - 5
-  		ngap::Int64 = itrunc((1/4)*ny) # number of the elementsof the layer in y direction
+  		ngap::Int64 = itrunc((1/4)*ny) # number of the elements of the layer in y direction
   		gap = (1/4)*y2 # y dimensions of the layer
   		ny = ny + ngap
   		y2 = y2 + gap
@@ -61,11 +61,11 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
 
   X::Array{Float64} = []
   T::Array{Float64} = []
-  (X,T) = CreateVelNod(x1,x2,y1,y2,nx,ny,nen)
+  (X,T) = mvelnod(x1,x2,y1,y2,nx,ny,nen)
 
   XP::Array{Float64} = []
   TP::Array{Float64} = []
-  (XP,TP) = CreatePresNod(X,T,nx,ny,nenP)
+  (XP,TP) = mpresnod(X,T,nx,ny,nenP)
 
   # Remesh in case of air layer
   if air == true
@@ -106,7 +106,7 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
 
   Accd::Array{Float64} = []
   bccd::Array{Float64} = []
-  (Accd, bccd) = BC_freeSlip(X,nUnkVel)
+  (Accd, bccd) = bcfreeslip(X,nUnkVel)
   nDirichletBC::Int64 = size(Accd,1)
 
   ## Computation (K,G)(v,p)=(f) system ##
@@ -124,7 +124,7 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
   aux::Array{Float64} = []
   sigmazz::Array{Float64} = zeros(2*nx) # stress_zz per columns (2*nx: number of gauss points in compStress)
 
-  timestep::Float64 = 0 # auxiliar variable to count the completed percentantge of the computation
+  timestep::Float64 = 0 # auxiliar variable to show the completed percentantge of the computation
   print_with_color(:red,"Elements = "*string(nx*ny)*"\n")
   print_with_color(:red,"Particles = "*string(nPar)"\n")
   time::Float64 = 0
@@ -137,12 +137,12 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
 		 PyPlot.clf()
 		 PyPlot.subplot(1,2,1,aspect=1)
 		 plotPar(par); # plot the grid particles with materials
-		 PyPlot.plot(XP[:,1],XP[:,2],"ko", alpha=0.6) # plot nodes
+		 PyPlot.plot(XP[:,1],XP[:,2],"ko", alpha=1) # plot nodes
 		 PyPlot.axis([x1, x2, y1, y2])
 		 PyPlot.title("Materials")
 
 		 # compute the matrix components
-		 (K, G, f) = CreMat(X,T,XP,TP,par,sradius)
+		 (K, G, f) = totalmat(X,T,XP,TP,par,sradius)
 
 		 # boundary conditions for pressure
 		 npf = (nx+1)*(ny+1)
@@ -166,26 +166,26 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
 		 PyPlot.savefig("./results/figs/map"*string(nx)*".png",dpi=250)
 
 		 if air == true
-		 		rank2m = (isurface-2*itrunc(sqrt(ppe)*nx)):(isurface-itrunc(sqrt(ppe)*nx)-1)
-		 		rank1m = (isurface-itrunc(sqrt(ppe)*nx)):(isurface-1)
-		 		rank1a = (isurface):(isurface+itrunc(sqrt(ppe)*nx)-1)
-		 		rank2a = (isurface+itrunc(sqrt(ppe)*nx)):(isurface+2*itrunc(sqrt(ppe)*nx)-1)
-		 		surfacemean = ( par[rank2m,2] .+ par[rank1m,2] .+ par[rank2a,2] .+ par[rank1a,2]  )./4
-		 		surface = [surface surfacemean ] # mean of the 2 first air/mantle rows
-		 		file2 = open("./results/surface_elem"*string(nx)*".dat","a")# openfile
-		 		writedlm(file2, surfacemean',"\t") # write in file
-		 		close(file2)
+	 		rank2m = (isurface-2*itrunc(sqrt(ppe)*nx)):(isurface-itrunc(sqrt(ppe)*nx)-1)
+	 		rank1m = (isurface-itrunc(sqrt(ppe)*nx)):(isurface-1)
+	 		rank1a = (isurface):(isurface+itrunc(sqrt(ppe)*nx)-1)
+	 		rank2a = (isurface+itrunc(sqrt(ppe)*nx)):(isurface+2*itrunc(sqrt(ppe)*nx)-1)
+	 		surfacemean = ( par[rank2m,2] .+ par[rank1m,2] .+ par[rank2a,2] .+ par[rank1a,2]  )./4
+	 		surface = [surface surfacemean ] # mean of the 2 first air/mantle rows
+	 		file2 = open("./results/surface_elem"*string(nx)*".dat","a")# openfile
+	 		writedlm(file2, surfacemean',"\t") # write in file
+	 		close(file2)
 		 else
-		 		# compute stresses on the top boundary
-		 		sigmazze = compStress(velo,pres,X,T,TP,par,nx,sradius);
-		 		sigmazz = [sigmazz sigmazze] # the 1st row are zeros
-		 		file1 = open("./results/sigmazz_elem"*string(nx)*".dat","a")
-		 		writedlm(file1, sigmazze',"\t") # write in file
-		 		close(file1)
+	 		# compute stresses on the top boundary
+	 		sigmazze = compstress(velo,pres,X,T,TP,par,nx,sradius);
+	 		sigmazz = [sigmazz sigmazze] # the 1st row are zeros
+	 		file1 = open("./results/sigmazz_elem"*string(nx)*".dat","a")
+	 		writedlm(file1, sigmazze',"\t") # write in file
+	 		close(file1)
 		 end
 
 		 # move particles
-		 updateParticles!(par,velo,nx,ny,x1,x2,y1,y2,rad)
+		 updateparticles!(par,velo,nx,ny,x1,x2,y1,y2,rad)
 
 		 # show the computational time
 		 timestep = toq()
@@ -201,11 +201,11 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
   ##################
 
   if air == true
-  	  plotLayer(x1,x2,surface,ppe,nx,nSteps)
-  	  close(file)
+  	  plotlayer(x1,x2,surface,ppe,nx,nSteps)
+  	  close(file2)
   else
-  	  plotFix(sigmazz,nx,nSteps,rho,x2)
-  	  close(file)
+  	  plotfix(sigmazz,nx,nSteps,rho,x2)
+  	  close(file1)
   end
 
   ## End of the the function ##

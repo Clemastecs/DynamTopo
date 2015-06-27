@@ -1,6 +1,6 @@
-function BC_freeSlip(X::Array{Float64},nunk::Int64)
+function bcfreeslip(X::Array{Float64},nunk::Int64)
 	"""
-	    Impose the boundary conditions
+	    This function imposes the boundary conditions using lagrange multipliers.
 
 	    	INPUT:
 	    		X:      Nodal Coordenates of velocity

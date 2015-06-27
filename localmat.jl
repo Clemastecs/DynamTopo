@@ -1,13 +1,13 @@
-function EleMat(Xe::Array{Float64},nen::Int64,ndofn::Int64,pospg::Array{Float64},pespg::Array{Float64},N::Array{Float64},Nxi::Array{Float64},Neta::Array{Float64},nenP::Int64,NP::Array{Float64},par::Array{Float64},sradius::Float64)
-	""" 
-	    Compute the components of the system matrix (K,G)(v,p)=(f)
-	    
+function localmat(Xe::Array{Float64},nen::Int64,ndofn::Int64,pospg::Array{Float64},weipg::Array{Float64},N::Array{Float64},Nxi::Array{Float64},Neta::Array{Float64},nenP::Int64,NP::Array{Float64},par::Array{Float64},sradius::Float64)
+	"""
+	    This function computes the  local components of the system matrix (K,G)(v,p)=(f)
+
 	    	INPUT:
 	    		Xe:         Nodal Coordenates of velocity
 	    		nen:        Number of the volocity nodes in each element
 	    		ndofn:      Number of dofs in velocity element
 	    		pospg:	   Position of the Gauss points on reference element
-	    		pespg:      Weigth of the Gauss points on reference element
+	    		weipg:      Weigth of the Gauss points on reference element
 	    		Nxi:  		Array of the derivatives shape functions of the velocity
 	    		Neta:			Array of the derivatives shape functions of the velocity
 	    		nenP:			Number of the pressure nodes in each element
@@ -15,13 +15,13 @@ function EleMat(Xe::Array{Float64},nen::Int64,ndofn::Int64,pospg::Array{Float64}
 	    		N:				Array of the shape functions of the velocity
 	    		sradius:    Radius to choose the mean of density and viscosity
 	    		par:			Set of particles
-	    		
+
 	    	OUTPUT:
 	    		Ke:	  		 Element diffussion matrix
 	    		Ge:   		 Element gradient matrix
 	    		fe:   		 Element font vector
-	"""				
-	
+	"""
+
   #Declaration of Variables
   Ke::Array{Float64} = zeros(ndofn,ndofn)
   Ge::Array{Float64} = zeros(nenP,ndofn)
@@ -59,7 +59,7 @@ function EleMat(Xe::Array{Float64},nen::Int64,ndofn::Int64,pospg::Array{Float64}
      Jacob = [ Nxi_igaus[1:nen]'*Xe[1:nen,1]	Nxi_igaus[1:nen]'*Xe[1:nen,2]; Neta_igaus[1:nen]'*Xe[1:nen,1]	Neta_igaus[1:nen]'*Xe[1:nen,2] ]
 
      # Weight per Jacobian determinant
-     dvolu=pespg[igaus].*det(Jacob)
+     dvolu=weipg[igaus].*det(Jacob)
 
      # Functions form derivatives on global coords
      res = Jacob\[Nxi_igaus;Neta_igaus]
@@ -69,25 +69,16 @@ function EleMat(Xe::Array{Float64},nen::Int64,ndofn::Int64,pospg::Array{Float64}
      Ny = [reshape([1;0]*res[2,:],1,ndofn); reshape([0;1]*res[2,:],1,ndofn)]
 
      # Local Matrix
-     #j = 1
-     #while ix != []
-		  ix = find(sum( [par[:,1:2] - repmat(N_igaus*Xe,nPar,1)]'.^2,1 ) .< sradius^2 ) # choose a viscosity
-		  #sradius = 2*sradius
-		  #j = j + 1
-		  #if j == 100
-		  	#	continue
-		  #end
-     #end
-  	  meanvisc = mean(par[ix,5])
-  	  
+	 ix = find(sum( [par[:,1:2] - repmat(N_igaus*Xe,nPar,1)]'.^2,1 ) .< sradius^2 ) # choose a viscosity
+  	 meanvisc = mean(par[ix,5])
+
      Ke = Ke + meanvisc*(Nx'*Nx+Ny'*Ny)*dvolu
 
      # Function form divergence
      dN = reshape(res,1,ndofn)
      Ge = Ge - NP_igaus'*dN*dvolu
 
-     # In this case there are not font
-     f_igaus = Source(N_igaus*Xe, par, sradius)
+     f_igaus = source(N_igaus*Xe, par, sradius)
 
      Ngp = [reshape([1;0].*N_igaus,1,ndofn); reshape([0;1].*N_igaus,1,ndofn)]
 
@@ -98,4 +89,3 @@ function EleMat(Xe::Array{Float64},nen::Int64,ndofn::Int64,pospg::Array{Float64}
   return Ke, Ge, fe;
 
 end
-

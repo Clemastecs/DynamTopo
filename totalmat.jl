@@ -1,20 +1,20 @@
-function CreMat(X::Array{Float64},T::Array{Float64},XP::Array{Float64},TP::Array{Float64},par::Array{Float64},sradius::Float64)
-	""" 
-	    Compute the components of the system matrix (K,G)(v,p)=(f)
-	    
-	    	INPUT:
+function totalmat(X::Array{Float64},T::Array{Float64},XP::Array{Float64},TP::Array{Float64},par::Array{Float64},sradius::Float64)
+	"""
+	    This function computes the total components of the system matrix (K,G)(v,p)=(f). 
+
+			INPUT:
 	    		X:        Nodal Coordenates of velocity
 	    		T:        Nodal Connectivities of velocity
 	    		XP:       Nodal Coordenates of pressure
 	    		TP:       Nodal Connectivities of pressure
 	    		par:      Set of particles
 	    		sradius:  Radius to choose the mean of density and viscosity
-	    		
+
 	    	OUTPUT:
 	    		K:	  		 Diffussion matrix
 	    		G:   		 Gradient matrix
 	    		f:   		 Font vector
-				
+
 	"""
   # Variables Declaration
   numel::Int64 = size(T,1)
@@ -25,11 +25,11 @@ function CreMat(X::Array{Float64},T::Array{Float64},XP::Array{Float64},TP::Array
   ndofn::Int64 = 2*nen
   nunkP::Int64 = size(XP,1)
   i::Int64 = 0
-  
 
-  (pospg,pespg) = Quadrature()
-  (N,Nxi,Neta) = shapeFunc(nen,pospg)
-  NP = shapeFunc(nenP,pospg)[1]
+
+  (pospg,weipg) = quadrature()
+  (N,Nxi,Neta) = shapefunc(nen,pospg)
+  NP = shapefunc(nenP,pospg)[1]
 
   Te::Vector{Int64} = []
   TeP::Vector{Int64} = []
@@ -41,7 +41,7 @@ function CreMat(X::Array{Float64},T::Array{Float64},XP::Array{Float64},TP::Array
   K::SparseMatrixCSC{Float64,Int64} = spzeros(nunk,nunk)
   G::SparseMatrixCSC{Float64,Int64} = spzeros(nunkP,nunk)
   f::Array{Float64} = zeros(nunk,1)
-  
+
   # Elements Loop
   for i = 1:numel
 
@@ -49,14 +49,14 @@ function CreMat(X::Array{Float64},T::Array{Float64},XP::Array{Float64},TP::Array
       Te = vec( reshape([2*T[i,:]-1; 2*T[i,:]],1,ndofn) )
       TeP = vec( TP[i,:] )
 
-      # Element Nodes Coords   
+      # Element Nodes Coords
       T2 = vec(T[i,1:nen])
       Xe = X[T2,:]
 
-      # Elemental Matrix
-      (Ke,Ge,fe) = EleMat(Xe,nen,ndofn,pospg,pespg,N,Nxi,Neta,nenP,NP,par,sradius)
+      # Local Matrix
+      (Ke,Ge,fe) = localmat(Xe,nen,ndofn,pospg,weipg,N,Nxi,Neta,nenP,NP,par,sradius)
 
-      # Elemental Matrix Assembly
+      # Local Matrix Assembly
       K[Te,Te]  = K[Te,Te] + Ke
       G[TeP,Te] = G[TeP,Te]+ Ge
       f[Te] = f[Te] + fe

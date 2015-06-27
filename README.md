@@ -22,7 +22,7 @@ where ***air*** adds a layer of air on the top of the domain.
 
 ##Output
 
-The output of the two cases are one data files on `./results/file.dat` and one figure of the last map of the particles on `./results/figs/fig.png`.
+The outputs of the two cases are one data files on `./results/file.dat` and one figure of the last map of the particles on `./results/figs/fig.png`.
 
 ## Recover the Data
 

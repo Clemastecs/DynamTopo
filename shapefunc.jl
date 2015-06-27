@@ -1,16 +1,16 @@
-function shapeFunc(geom::Int64,pospg::Array{Float64})
-	""" 
-	    Compute the components of the system matrix (K,G)(v,p)=(f)
-	    
+function shapefunc(geom::Int64,pospg::Array{Float64})
+	"""
+	    This function computes the shape functions for Q2Q1-elements.
+
 	    	INPUT:
-	    		geom:       The nodal geometry of the element (nen, nenP)
+	    		geom:      The nodal geometry of the element (nen, nenP)
 	    		pospg:	   Position of the Gauss points on reference element
-	    		
+
 	    	OUTPUT:
 	    		Nxi:  		Array of the derivatives shape functions of the velocity
-	    		Neta:			Array of the derivatives shape functions of the velocity
-	    		N:				Array of the shape functions of the velocity/pressure
-	"""	
+	    		Neta:		Array of the derivatives shape functions of the velocity
+	    		N:			Array of the shape functions of the velocity/pressure
+	"""
 
 
   # Variable Declaration

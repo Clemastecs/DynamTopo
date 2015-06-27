@@ -1,6 +1,6 @@
-function compStress(velo::Array{Float64},pres::Array{Float64},X::Array{Float64},T::Array{Float64},TP::Array{Float64},par::Array{Float64},nx::Int64,sradius::Float64)
+function compstress(velo::Array{Float64},pres::Array{Float64},X::Array{Float64},T::Array{Float64},TP::Array{Float64},par::Array{Float64},nx::Int64,sradius::Float64)
 	"""
-	    Compute the sigmazz on the top boundary
+	    This function recovers the sigmazz on the top of the boundary using a new gauss points.
 
 	    	INPUT:
 	    		velo:    Array of velocities in x and y
@@ -42,22 +42,22 @@ function compStress(velo::Array{Float64},pres::Array{Float64},X::Array{Float64},
 	j::Int64 = 0
 	i::Int64 = 0
 	ix::Array{Float64} = {}
-	
+
 	N_igaus::Array{Float64} = []
 	Nxi_igaus::Array{Float64} = []
 	Neta_igaus::Array{Float64} = []
-	
-	
+
+
 	pospg=[-1/2 1; 1/2 1] # quadrature for gauss points on the top boundary
 	ngaus::Int64 = size(pospg,1)
 
-	(N,Nxi,Neta) = shapeFunc(nen,pospg)
-	NP = shapeFunc(nenP,pospg)[1]
+	(N,Nxi,Neta) = shapefunc(nen,pospg)
+	NP = shapefunc(nenP,pospg)[1]
 
 	for i = (numel-nx+1):numel # Only the top elements
 
 		# Velocity solution on the top boundary
-		Te = vec(T[i,:])		
+		Te = vec(T[i,:])
     	Xe = X[Te,:]
 		Vze = velo[Te,2] # Vertical velocities
 
@@ -72,27 +72,18 @@ function compStress(velo::Array{Float64},pres::Array{Float64},X::Array{Float64},
 			# Function form values & Local Gauss points derivatives
 			N_igaus = N[igaus,:]
 			Nxi_igaus = Nxi[igaus,:]
-      	Neta_igaus = Neta[igaus,:]
+      		Neta_igaus = Neta[igaus,:]
 
      		# Jacobian Matrix on Gauss point
      		Jacob = [ Nxi_igaus[1:ngeom]'*Xe[1:ngeom,1]	Nxi_igaus[1:ngeom]'*Xe[1:ngeom,2]; Neta_igaus[1:ngeom]'*Xe[1:ngeom,1]	Neta_igaus[1:ngeom]'*Xe[1:ngeom,2] ]
 
      		# Functions form derivatives on global coords
      		res = Jacob\[Nxi_igaus; Neta_igaus]
-     		
+
      		# Choose a viscosity
-     		#j = 1
-     		#while ix == []
-		  		ix = find(sum( [par[:,1:2] - repmat(N_igaus*Xe,nPar,1)]'.^2,1 ) .< sradius^2 )
-		  	#	sradius = 2*sradius
-		  	#	j = j + 1
-		  	#	if j == 100
-		  	#		continue
-		  	#	end
-     		#end
-     		
+		  	ix = find(sum( [par[:,1:2] - repmat(N_igaus*Xe,nPar,1)]'.^2,1 ) .< sradius^2 )
   	  		meanvisc = mean(par[ix,5])
-  	  		      	
+
   			svelo = 2*meanvisc*res[2,:]*Vze
 
   			# Solution of sigmazz

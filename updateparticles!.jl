@@ -1,17 +1,17 @@
-function updateParticles!( par::Array{Float64}, velo::Array{Float64}, nx::Int64, ny::Int64, x1::Int64, x2::Int64, y1::Int64, y2::Int64, rad::Float64)
-	""" 
-	    Update the set of particles
-	    
+function updateparticles!( par::Array{Float64}, velo::Array{Float64}, nx::Int64, ny::Int64, x1::Int64, x2::Int64, y1::Int64, y2::Int64, rad::Float64)
+	"""
+	    This function updates the set of particles using the velocity field.
+
 	    	INPUT:
 	    		par:     	  Array of particles with own properties
-	    		velo: 		  Array of velocities	
+	    		velo: 		  Array of velocities
 	    		nx,ny: 		  Mesh dimensions (nx)x(ny)-elements
 	    		x1,x2,y1,y2:  Domain [x1,x2]x[y1,y2]
-	    		rad:			  Dimension of the smallest node's side 
-	    		
+	    		rad:		  Dimension of the smallest node's side
+
 	    	OUTPUT:
 	    		This function modify the par
-	    		
+
 	    	ANNOTATIONS:
 				Needs the Grid.jl pkg to uses CoordInterpGrid.
 				Remember the construction of velocity mesh to reshape and interpolate
@@ -36,6 +36,3 @@ function updateParticles!( par::Array{Float64}, velo::Array{Float64}, nx::Int64,
   par[:,1:2] = par[:,1:2] + [vx_i vy_i] * dt
 
 end
-
-
-

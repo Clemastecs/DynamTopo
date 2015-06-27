@@ -1,5 +1,3 @@
-
-
 """
 	This script load the workspace of Stokes' model for dynamical topography.
 
@@ -21,21 +19,21 @@ import PyPlot # Plots, install python-mathplotlib first
 ###############
 # (Calling our scripts located in the same directory of main.jl)
 
-include("BC_freeSlip.jl")
-include("CreateVelNod.jl")
-include("CreatePresNod.jl")
-include("CreMat.jl")
-include("EleMat.jl")
-include("Source.jl")
-include("plotLayer.jl")
-include("shapeFunc.jl")
-include("plotPar.jl")
+include("bcfreeslip.jl")
+include("mvelnod.jl")
+include("mpresnod.jl")
+include("totalmat.jl")
+include("localmat.jl")
+include("source.jl")
+include("plotlayer.jl")
+include("shapefunc.jl")
+include("plotpar.jl")
 include("setparticles.jl")
-include("Quadrature.jl")
-include("updateParticles!.jl")
+include("quadrature.jl")
+include("updateparticles!.jl")
 include("remesh!.jl")
-include("compStress.jl")
-include("plotFix.jl")
+include("compstress.jl")
+include("plotfix.jl")
 
 include("Stokes.jl")
 
