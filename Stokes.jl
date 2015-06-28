@@ -27,7 +27,7 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
   visc::Array{Float64} = [50 69000 1] # [mantle viscosity, sphere viscosity, air viscosity]
   rho::Array{Float64} = [1420 1150 1] # [mantle density, sphere desnity, air density]
   pto::Array{Float64} = [ 20 10 ] # initial center position of the body
-  radius::Float64 = 3 # initial radius of the body
+  radius::Float64 = 1.75 # initial radius of the body
   ppe::Int64 = 30 # particles per element
 
   # domain [x1,x2]x[y1,y2]
@@ -136,7 +136,7 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
 		 # draw material map
 		 PyPlot.clf()
 		 PyPlot.subplot(1,2,1,aspect=1)
-		 plotPar(par); # plot the grid particles with materials
+		 plotpar(par); # plot the grid particles with materials
 		 PyPlot.plot(XP[:,1],XP[:,2],"ko", alpha=1) # plot nodes
 		 PyPlot.axis([x1, x2, y1, y2])
 		 PyPlot.title("Materials")
