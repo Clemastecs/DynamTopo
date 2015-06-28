@@ -51,9 +51,9 @@ function plotfix(sigmazz::Array{Float64}, nx::Int64, nSteps::Int64, rho::Array{F
 	  PyPlot.xlabel("Surface")
 	  PyPlot.title("Geological Height")
 	  for i=2:nSteps-1
-	  		PyPlot.plot(sigmadom,h[:,i]-h[:,2], linewidth=1.2, alpha= alpha[i], antialiased=true, color="red")
+	  		PyPlot.plot(sigmadom,h[:,i], linewidth=1.2, alpha= alpha[i], antialiased=true, color="red")
 	  end
-	  PyPlot.plot(sigmadom,h[:,i+1]-h[:,2], linewidth=2, alpha= 1, antialiased=true,color="black")
+	  PyPlot.plot(sigmadom,h[:,i+1], linewidth=2, alpha= 1, antialiased=true,color="black")
 	  PyPlot.grid()
 
 	  PyPlot.subplot(2,2,4)
@@ -62,6 +62,7 @@ function plotfix(sigmazz::Array{Float64}, nx::Int64, nSteps::Int64, rho::Array{F
 	  PyPlot.title("Maximum Height")
 	  PyPlot.plot([2:nSteps], maxh[2:end], linewidth=2,color="red")
 	  PyPlot.grid()
+	  print_with_color(:red,"h max: "*string(maxh[end])*"\n")
 
 	  #PyPlot.savefig("Geo_High.jpg")
 

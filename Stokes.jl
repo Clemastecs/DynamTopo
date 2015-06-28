@@ -26,7 +26,7 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
 
   visc::Array{Float64} = [50 69000 1] # [mantle viscosity, sphere viscosity, air viscosity]
   rho::Array{Float64} = [1420 1150 1] # [mantle density, sphere desnity, air density]
-  pto::Array{Float64} = [ 20 10 ] # initial center position of the body
+  pto::Array{Float64} = [ 20 30 ] # initial center position of the body
   radius::Float64 = 1.75 # initial radius of the body
   ppe::Int64 = 30 # particles per element
 
