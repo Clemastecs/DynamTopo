@@ -5,7 +5,7 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
   		 	INPUT:
 	    		air:     Boolean to apply the layer
 	    		nx:      Mesh dimensions (nx)x(ny)-elements
-	    		nSteps:	Number of the time steps
+	    		nSteps:	 Number of the time steps
 
 	    	OUTPUT:
 	    		One data files on ./results/file.data
@@ -14,7 +14,7 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
 	    	ANNOTATIONS:
 				Sphere density:  1150
 				Mantle density: 1420
-				Air density: 0
+				Air density: 1.2754
 				Sphere viscosity: 69000
 				Mantle viscosity: 50
 				Air viscosity: 1
@@ -25,8 +25,8 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
   i::Int64 = 0
 
   visc::Array{Float64} = [50 69000 1] # [mantle viscosity, sphere viscosity, air viscosity]
-  rho::Array{Float64} = [1420 1150 1] # [mantle density, sphere desnity, air density]
-  pto::Array{Float64} = [ 20 30 ] # initial center position of the body
+  rho::Array{Float64} = [1420 1150 1.2754] # [mantle density, sphere desnity, air density]
+  pto::Array{Float64} = [ 20 5 ] # initial center position of the body
   radius::Float64 = 3 # initial radius of the body
   ppe::Int64 = 30 # particles per element
 
@@ -74,9 +74,9 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
   end
 
   # radius to choose the mean of density and viscosity
-  Te::Array{Float64} = vec(T[end,:]);
-  Ye::Array{Float64} = X[Te,2];
-  rad::Float64 = Ye[3] - Ye[2];
+  Te::Array{Float64} = vec(T[end,:])
+  Ye::Array{Float64} = X[Te,2]
+  rad::Float64 = Ye[3] - Ye[2]
   sradius::Float64 = rad / 2
 
   ## Initial set of particles ##
@@ -109,8 +109,8 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
   (Accd, bccd) = bcfreeslip(X,nUnkVel)
   nDirichletBC::Int64 = size(Accd,1)
 
-  ## Computation (K,G)(v,p)=(f) system ##
-  #######################################
+  ## Computation of (K,G)(v,p)=(f) system ##
+  ##########################################
 
   nUnkPre = nUnkPre-1 # necessary to impose a 0-row
   velo::Array{Float64} = [] # velocity vector
@@ -202,10 +202,8 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
 
   if air == true
   	  plotlayer(x1,x2,surface,ppe,nx,nSteps)
-  	  close(file2)
   else
   	  plotfix(sigmazz,nx,nSteps,rho,x2)
-  	  close(file1)
   end
 
   ## End of the the function ##

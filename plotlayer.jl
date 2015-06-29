@@ -3,8 +3,8 @@ function plotlayer(x1::Int64, x2::Int64, surface::Array{Float64}, ppe::Int64, nx
 		This function computes the height of the surface using polyfit() and plots the results of the air layer case.
 
 			INPUT:
-	    		surface:  The height on the surface for each step
-	    		nx:       Mesh dimensions (nx)x(ny)-elements
+	    		surface:  	 The height on the surface for each step
+	    		nx:      	 Mesh dimensions (nx)x(ny)-elements
 	    		nSteps:	 	 Number of the time steps
 	    		rho:      	 Array of the densities
 	    		x1,x2:       Domain [x1,x2]x[y1,y2]

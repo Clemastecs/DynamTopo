@@ -60,7 +60,7 @@ function plotfix(sigmazz::Array{Float64}, nx::Int64, nSteps::Int64, rho::Array{F
 	  PyPlot.title("Maximum Height")
 	  PyPlot.plot([2:nSteps], maxh[2:end], linewidth=2,color="red")
 	  PyPlot.grid()
-	  print_with_color(:red,"h max: "*string(maxh[end])*"\n")
+	  print_with_color(:green,"h max: "*string(maxh[end])*"\n")
 
 	  #PyPlot.savefig("Geo_High.jpg") #save the plot in file
 

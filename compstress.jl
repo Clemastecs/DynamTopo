@@ -5,7 +5,7 @@ function compstress(velo::Array{Float64},pres::Array{Float64},X::Array{Float64},
 	    	INPUT:
 	    		velo:    Array of velocities in x and y
 	    		pres:    Array of pressures
-	    		X:			Nodal Coordenates of velocity
+	    		X:		 Nodal Coordenates of velocity
 	    		T:       Connectivity Matrix of velocity
 	    		TP:      Connectivity Matrix of pressure
 

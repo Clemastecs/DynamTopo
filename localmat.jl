@@ -1,20 +1,20 @@
 function localmat(Xe::Array{Float64},nen::Int64,ndofn::Int64,pospg::Array{Float64},weipg::Array{Float64},N::Array{Float64},Nxi::Array{Float64},Neta::Array{Float64},nenP::Int64,NP::Array{Float64},par::Array{Float64},sradius::Float64)
 	"""
-	    This function computes the local components of the system matrix fo FEM: (K,G)(v,p)=(f) 
+	    This function computes the local components of the system matrix fo FEM: (K,G)(v,p)=(f)
 
 	    	INPUT:
 	    		Xe:         Nodal Coordenates of velocity
 	    		nen:        Number of the volocity nodes in each element
 	    		ndofn:      Number of dofs in velocity element
-	    		pospg:	   Position of the Gauss points on reference element
+	    		pospg:	    Position of the Gauss points on reference element
 	    		weipg:      Weigth of the Gauss points on reference element
 	    		Nxi:  		Array of the derivatives shape functions of the velocity
-	    		Neta:			Array of the derivatives shape functions of the velocity
-	    		nenP:			Number of the pressure nodes in each element
+	    		Neta:		Array of the derivatives shape functions of the velocity
+	    		nenP:		Number of the pressure nodes in each element
 	    		NP:			Array of the shape functions of the pressure
-	    		N:				Array of the shape functions of the velocity
+	    		N:			Array of the shape functions of the velocity
 	    		sradius:    Radius to choose the mean of density and viscosity
-	    		par:			Set of particles
+	    		par:		Set of particles
 
 	    	OUTPUT:
 	    		Ke:	  		 Element diffussion matrix

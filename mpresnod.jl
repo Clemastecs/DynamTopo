@@ -3,9 +3,9 @@ function mpresnod(X::Array{Float64},T::Array{Float64},nx::Int64,ny::Int64,nenP::
 		This function creates the topology of the mesh of pressure in [x1,x2]x[y1,y2] domain with (nx)*(ny) Q2Q1-elements
 
 			INPUT:
-	    		X: 		Nodal Coordenates of velocity
-				T: 		Nodal Connectivities of velocity
-	    		nx,ny: 	Mesh dimensions (nx)x(ny)-elements
+	    		X: 		    Nodal Coordenates of velocity
+				T: 		    Nodal Connectivities of velocity
+	    		nx,ny:   	Mesh dimensions (nx)x(ny)-elements
 	    		nenP:		Number of the pressure nodes in each element
 
 	    	OUTPUT:
