@@ -21,5 +21,4 @@ function source(xc::Array{Float64}, par::Array{Float64}, sradius::Float64)
   f::Array{Float64} = [0; meanRho*g]
 
   return f
-
 end

@@ -11,7 +11,6 @@ function plotpar(par::Array{Float64})
 	    		Needs a plotting pkg to draw
 	"""
 
-	#Pyplot
 	p = par[par[:,3].==1,:];
 	PyPlot.plot( p[:,1], p[:,2],"b.", alpha= 0.6, antialiased=true)
 

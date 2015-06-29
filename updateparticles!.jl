@@ -17,6 +17,7 @@ function updateparticles!( par::Array{Float64}, velo::Array{Float64}, nx::Int64,
 				Remember the construction of velocity mesh to reshape and interpolate
 	"""
 
+  # Variable declaration
   alpha::Float64 = 0.5
   xrange::FloatRange{Float64} = x1:x2/(2*nx):x2
   yrange::FloatRange{Float64} = y1:y2/(2*ny):y2
@@ -25,14 +26,13 @@ function updateparticles!( par::Array{Float64}, velo::Array{Float64}, nx::Int64,
   vx::Array{Float64} = reshape(velo[:,1], 2*nx+1, 2*ny+1 )
   vy::Array{Float64} = reshape(velo[:,2], 2*nx+1, 2*ny+1 )
 
-  #Interpolation
+  # Interpolation
   fvx_i = CoordInterpGrid((xrange,yrange), vx, BCnearest, InterpLinear)
   fvy_i = CoordInterpGrid((xrange,yrange), vy, BCnearest, InterpLinear)
 
   vx_i::Array{Float64} = {fvx_i[par[I,1:2]...] for I = 1:size(par,1)}
   vy_i::Array{Float64} = {fvy_i[par[I,1:2]...] for I = 1:size(par,1)}
 
-  #Euler explicit (y_n=y_n+dt*f(y_n))
+  # Euler explicit (y_n=y_n+dt*f(y_n))
   par[:,1:2] = par[:,1:2] + [vx_i vy_i] * dt
-
 end

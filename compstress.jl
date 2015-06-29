@@ -47,7 +47,6 @@ function compstress(velo::Array{Float64},pres::Array{Float64},X::Array{Float64},
 	Nxi_igaus::Array{Float64} = []
 	Neta_igaus::Array{Float64} = []
 
-
 	pospg=[-1/2 1; 1/2 1] # quadrature for gauss points on the top boundary
 	ngaus::Int64 = size(pospg,1)
 
@@ -55,7 +54,6 @@ function compstress(velo::Array{Float64},pres::Array{Float64},X::Array{Float64},
 	NP = shapefunc(nenP,pospg)[1]
 
 	for i = (numel-nx+1):numel # Only the top elements
-
 		# Velocity solution on the top boundary
 		Te = vec(T[i,:])
     	Xe = X[Te,:]
@@ -66,9 +64,7 @@ function compstress(velo::Array{Float64},pres::Array{Float64},X::Array{Float64},
 		Pe = pres[TeP]
 		spres = NP*Pe
 
-
 		for igaus = 1:ngaus
-
 			# Function form values & Local Gauss points derivatives
 			N_igaus = N[igaus,:]
 			Nxi_igaus = Nxi[igaus,:]
@@ -88,13 +84,10 @@ function compstress(velo::Array{Float64},pres::Array{Float64},X::Array{Float64},
 
   			# Solution of sigmazz
 			ssol[igaus] =  svelo[1] - spres[igaus]
-
 		end
 
 		sigmazz = [sigmazz; ssol]
-
 	end
 
 	return sigmazz
-
 end

@@ -5,7 +5,7 @@ function quadrature()
 	    	INPUT:
 
 	    	OUTPUT:
-	    		pospg:	Position of the Gauss points on reference element
+	    		pospg:	 Position of the Gauss points on reference element
 	    		weipg:   Weigth of the Gauss points on reference element
 
 	"""

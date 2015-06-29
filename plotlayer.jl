@@ -1,6 +1,6 @@
 function plotlayer(x1::Int64, x2::Int64, surface::Array{Float64}, ppe::Int64, nx::Int64, nSteps::Int64)
 	"""
-		This function computes the height surface using plotfit() and plots the results of the air layer case.
+		This function computes the height of the surface using polyfit() and plots the results of the air layer case.
 
 			INPUT:
 	    		surface:  The height on the surface for each step
@@ -15,6 +15,8 @@ function plotlayer(x1::Int64, x2::Int64, surface::Array{Float64}, ppe::Int64, nx
 	    	ANNOTATIONS:
 	    		Needs a plotting pkg to draw
 	"""
+
+	# Variable declaration
 	i::Int64 = 0
 	sdom::Array{Float64}= linspace(x1,x2,size(surface,1))
 	alpha::Array{Float64} = linspace(0,1,nSteps)
@@ -66,7 +68,7 @@ function polyfit(x::Array{Float64}, y::Array{Float64}, n::Int64)
 	    		Array with polynomial's coeficients
 
 	    	ANNOTATIONS:
-	    		Based on least-square method
+	    		Least-square
 	"""
    A::Array{Float64} = []
 	i::Int64 = 0

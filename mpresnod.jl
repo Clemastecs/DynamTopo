@@ -1,5 +1,5 @@
-function  mpresnod(X::Array{Float64},T::Array{Float64},nx::Int64,ny::Int64,nenP::Int64)
-  """
+function mpresnod(X::Array{Float64},T::Array{Float64},nx::Int64,ny::Int64,nenP::Int64)
+    """
 		This function creates the topology of the mesh of pressure in [x1,x2]x[y1,y2] domain with (nx)*(ny) Q2Q1-elements
 
 			INPUT:
@@ -11,7 +11,7 @@ function  mpresnod(X::Array{Float64},T::Array{Float64},nx::Int64,ny::Int64,nenP:
 	    	OUTPUT:
  				XP: 		Nodal Coordenates of pressure
 				TP: 		Nodal Connectivities of pressure
-	"""
+    """
 
   # Variables Declaration
   numel::Int64 = size(T,1)
@@ -39,5 +39,4 @@ function  mpresnod(X::Array{Float64},T::Array{Float64},nx::Int64,ny::Int64,nenP:
   end
 
   return XP, TP
-
 end

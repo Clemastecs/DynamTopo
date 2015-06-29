@@ -1,6 +1,6 @@
 function totalmat(X::Array{Float64},T::Array{Float64},XP::Array{Float64},TP::Array{Float64},par::Array{Float64},sradius::Float64)
 	"""
-	    This function computes the total components of the system matrix (K,G)(v,p)=(f). 
+	    This function computes the total components of the system matrix (K,G)(v,p)=(f).
 
 			INPUT:
 	    		X:        Nodal Coordenates of velocity
@@ -26,7 +26,6 @@ function totalmat(X::Array{Float64},T::Array{Float64},XP::Array{Float64},TP::Arr
   nunkP::Int64 = size(XP,1)
   i::Int64 = 0
 
-
   (pospg,weipg) = quadrature()
   (N,Nxi,Neta) = shapefunc(nen,pospg)
   NP = shapefunc(nenP,pospg)[1]
@@ -44,7 +43,6 @@ function totalmat(X::Array{Float64},T::Array{Float64},XP::Array{Float64},TP::Arr
 
   # Elements Loop
   for i = 1:numel
-
       # Reorder
       Te = vec( reshape([2*T[i,:]-1; 2*T[i,:]],1,ndofn) )
       TeP = vec( TP[i,:] )
@@ -60,9 +58,7 @@ function totalmat(X::Array{Float64},T::Array{Float64},XP::Array{Float64},TP::Arr
       K[Te,Te]  = K[Te,Te] + Ke
       G[TeP,Te] = G[TeP,Te]+ Ge
       f[Te] = f[Te] + fe
-
   end
 
   return K, G, f
-
 end

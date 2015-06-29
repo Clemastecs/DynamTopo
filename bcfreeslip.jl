@@ -8,7 +8,7 @@ function bcfreeslip(X::Array{Float64},nunk::Int64)
 
 	    	OUTPUT:
 	    		Accd:	  BC matrix
-	    		bccd:   BC vector
+	    		bccd:     BC vector
 
 	"""
 

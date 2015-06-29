@@ -11,6 +11,7 @@ function mvelnod(x1::Int64,x2::Int64,y1::Int64,y2::Int64,nx::Int64,ny::Int64,nen
  				X: 			  Nodal Coordenates of velocity
 				T: 			  Nodal Connectivities of velocity
 	"""
+
   # Variables Declaration
   npx::Int64 = 2*nx+1 # Auxiliar dimensions to create the mesh with 9-nodes
   npy::Int64 = 2*ny+1
@@ -27,7 +28,6 @@ function mvelnod(x1::Int64,x2::Int64,y1::Int64,y2::Int64,nx::Int64,ny::Int64,nen
   T::Array{Float64} = zeros(nx*ny,nen)
 
   yys::Array{Float64} = linspace(y1,y2,npy)
-
 
   # Compute of X
   for i=1:npy
@@ -47,5 +47,4 @@ function mvelnod(x1::Int64,x2::Int64,y1::Int64,y2::Int64,nx::Int64,ny::Int64,nen
   end
 
 return X, T
-
 end

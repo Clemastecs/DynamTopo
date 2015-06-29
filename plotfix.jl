@@ -43,9 +43,7 @@ function plotfix(sigmazz::Array{Float64}, nx::Int64, nSteps::Int64, rho::Array{F
 	  PyPlot.plot(sigmadom,sigmazz[:,i+1], linewidth=2, alpha= 1, antialiased=true, color="black")
 	  PyPlot.grid()
 
-	  #PyPlot.subplot(2,2,2,)
-
-	  # draw height in each step
+	  # plot height in each step
 	  PyPlot.subplot(2,2,3)
 	  PyPlot.ylabel("Height h")
 	  PyPlot.xlabel("Surface")
@@ -64,6 +62,6 @@ function plotfix(sigmazz::Array{Float64}, nx::Int64, nSteps::Int64, rho::Array{F
 	  PyPlot.grid()
 	  print_with_color(:red,"h max: "*string(maxh[end])*"\n")
 
-	  #PyPlot.savefig("Geo_High.jpg")
+	  #PyPlot.savefig("Geo_High.jpg") #save the plot in file
 
 end
