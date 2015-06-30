@@ -14,10 +14,10 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
             ANNOTATIONS:
                 Sphere density:  1150
                 Mantle density: 1420
-                Air density: 1.2754
+                Air density: 1
                 Sphere viscosity: 69000
                 Mantle viscosity: 50
-                Air viscosity: 1
+                Air viscosity: Sticky air
   =#
 
   ## Initial Data ##
@@ -25,8 +25,8 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
   i::Int64 = 0
 
   visc::Array{Float64} = [50 69000 50] # [mantle viscosity, sphere viscosity, air viscosity]
-  rho::Array{Float64} = [1420 1150 1] # [mantle density, sphere desnity, air density]
-  pto::Array{Float64} = [ 20 20 ] # initial center position of the body
+  rho::Array{Float64} = [1420 1150 0] # [mantle density, sphere desnity, air density]
+  pto::Array{Float64} = [ 20 5 ] # initial center position of the body
   radius::Float64 = 3 # initial radius of the body
   ppe::Int64 = 30 # particles per element
 
@@ -146,7 +146,6 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
          (K, G, f) = totalmat(X,T,XP,TP,par,sradius)
 
          # boundary conditions for pressure
-         npf = (nx+1)*(ny+1)
          G = G[ [1:end-1], :] # Erase last row
 
          # global matrix generation with Dirichlet BC

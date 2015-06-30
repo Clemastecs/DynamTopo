@@ -17,8 +17,8 @@ function source(xc::Array{Float64}, par::Array{Float64}, sradius::Float64)
 
   ix = find(sum( [par[:,1:2] - repmat(xc,nPar,1)]'.^2,1 ) .< sradius^2 )
 
-  meanRho::Float64 = mean(par[ix,4])
-  f::Array{Float64} = [0; meanRho*g]
+  meanrho::Float64 = mean(par[ix,4])
+  f::Array{Float64} = [0; meanrho*g]
 
   return f
 end

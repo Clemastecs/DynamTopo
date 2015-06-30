@@ -16,7 +16,7 @@ function totalmat(X::Array{Float64},T::Array{Float64},XP::Array{Float64},TP::Arr
 	    		f:   		 Font vector
 
 	=#
-	
+
   # Variables Declaration
   numel::Int64 = size(T,1)
   nen::Int64 = size(T,2)

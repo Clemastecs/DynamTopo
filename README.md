@@ -14,7 +14,7 @@ Once the main code is loaded just input:
 
 where ***n*** is the dimension of the mesh (n)x(n) with Q2Q1-elements. Each element contains ***ppe*** particles and ***nSteps*** are the time steps.
 
-Alternatively:
+Alternatively(It does not work properly):
 
 	julia > Stokes(n,nSteps,air)
 
