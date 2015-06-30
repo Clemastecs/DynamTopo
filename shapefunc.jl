@@ -1,5 +1,5 @@
 function shapefunc(geom::Int64,pospg::Array{Float64})
-	"""
+	#=
 	    This function computes the shape functions for Q2Q1-elements.
 
 	    	INPUT:
@@ -10,7 +10,7 @@ function shapefunc(geom::Int64,pospg::Array{Float64})
 	    		Nxi:  		Array of the derivatives shape functions of the velocity
 	    		Neta:		Array of the derivatives shape functions of the velocity
 	    		N:			Array of the shape functions of the velocity/pressure
-	"""
+	=#
 
   # Variable Declaration
   xi::Array{Float64} = pospg[:,1]

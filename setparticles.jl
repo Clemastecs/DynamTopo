@@ -1,5 +1,5 @@
 function setparticles(x1::Int64, x2::Int64, y2::Int64, nx::Int64, ny::Int64, ppe::Int64, radius::Float64, visc::Array{Float64}, rho::Array{Float64}, pto::Array{Float64}, air::Bool, gap::Float64)
-	"""
+	#=
 		This function creates the set of particles.
 
 			INPUT:
@@ -16,7 +16,7 @@ function setparticles(x1::Int64, x2::Int64, y2::Int64, nx::Int64, ny::Int64, ppe
 	    	OUTPUT:
  				nPar: 		Dimension of the array of particles
 				par: 			Array of particles with own properties
-	"""
+	=#
 
 	# Variable declaration.
 	ix::Array{Int64} = []

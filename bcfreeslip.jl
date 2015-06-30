@@ -1,5 +1,5 @@
 function bcfreeslip(X::Array{Float64},nunk::Int64)
-	"""
+	#=
 	    This function imposes the boundary conditions using lagrange multipliers.
 
 	    	INPUT:
@@ -10,7 +10,7 @@ function bcfreeslip(X::Array{Float64},nunk::Int64)
 	    		Accd:	  BC matrix
 	    		bccd:     BC vector
 
-	"""
+	=#
 
   # Variables declaration
   xmin::Float64 = minimum(X[:,1])

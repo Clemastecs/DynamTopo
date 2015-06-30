@@ -1,5 +1,5 @@
 function plotfix(sigmazz::Array{Float64}, nx::Int64, nSteps::Int64, rho::Array{Float64}, x2::Int64)
-	"""
+	#=
 		This function computes the height and plots the results of the fixed case.
 
 			INPUT:
@@ -14,7 +14,7 @@ function plotfix(sigmazz::Array{Float64}, nx::Int64, nSteps::Int64, rho::Array{F
 
 	    	ANNOTATIONS:
 	    		Needs a plotting pkg to draw
-	"""
+	=#
 
 	  # geological height and aux variables
 	  h::Array{Float64} = zeros(2*nx) # Geological height (2*nx: number of gauss points in compStress)

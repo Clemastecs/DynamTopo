@@ -1,5 +1,5 @@
 function plotpar(par::Array{Float64})
-	"""
+	#=
 		This function plots the set of particles.
 
 			INPUT:
@@ -9,7 +9,7 @@ function plotpar(par::Array{Float64})
 
 	    	ANNOTATIONS:
 	    		Needs a plotting pkg to draw
-	"""
+	=#
 
 	p = par[par[:,3].==1,:];
 	PyPlot.plot( p[:,1], p[:,2],"b.", alpha= 0.6, antialiased=true)

@@ -1,5 +1,5 @@
 function quadrature()
-	"""
+	#=
 	    This function constructs the quadrature on reference element.
 
 	    	INPUT:
@@ -8,7 +8,8 @@ function quadrature()
 	    		pospg:	 Position of the Gauss points on reference element
 	    		weipg:   Weigth of the Gauss points on reference element
 
-	"""
+	=#
+	
   pos1::Float64 = sqrt(3/5)
   pospg::Array{Float64}=[-pos1   -pos1;
                              0   -pos1;

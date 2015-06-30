@@ -1,5 +1,5 @@
 function plotlayer(x1::Int64, x2::Int64, surface::Array{Float64}, ppe::Int64, nx::Int64, nSteps::Int64)
-	"""
+	#=
 		This function computes the height of the surface using polyfit() and plots the results of the air layer case.
 
 			INPUT:
@@ -14,7 +14,7 @@ function plotlayer(x1::Int64, x2::Int64, surface::Array{Float64}, ppe::Int64, nx
 
 	    	ANNOTATIONS:
 	    		Needs a plotting pkg to draw
-	"""
+	=#
 
 	# Variable declaration
 	i::Int64 = 0
@@ -22,7 +22,7 @@ function plotlayer(x1::Int64, x2::Int64, surface::Array{Float64}, ppe::Int64, nx
 	alpha::Array{Float64} = linspace(0,1,nSteps)
 	x=linspace(x1+1,x2-1)
 	coef::Array{Float64} = []
-	maxh::Array{Float64} = zeros(size(surface,2))
+	maxh::Array{Float64} = zeros(nSteps)
 
 	PyPlot.figure(3)
 	PyPlot.clf()
@@ -51,13 +51,13 @@ function plotlayer(x1::Int64, x2::Int64, surface::Array{Float64}, ppe::Int64, nx
 	PyPlot.ylabel("Max h")
 	PyPlot.xlabel("Steps")
 	PyPlot.title("Maximum Height")
-	PyPlot.plot([2:size(surface,2)], maxh[2:end], linewidth=2, color="red")
+	PyPlot.plot([2:nSteps], maxh[2:end], linewidth=2, color="red")
 	PyPlot.grid()
 
 end
 
 function polyfit(x::Array{Float64}, y::Array{Float64}, n::Int64)
-	"""
+	#=
 		Compute the coeficients of n-polynomial associated to (x,y) points
 
 			INPUT:
@@ -69,7 +69,7 @@ function polyfit(x::Array{Float64}, y::Array{Float64}, n::Int64)
 
 	    	ANNOTATIONS:
 	    		Least-square
-	"""
+	=#
    A::Array{Float64} = []
 	i::Int64 = 0
 

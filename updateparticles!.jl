@@ -1,5 +1,5 @@
 function updateparticles!( par::Array{Float64}, velo::Array{Float64}, nx::Int64, ny::Int64, x1::Int64, x2::Int64, y1::Int64, y2::Int64, rad::Float64)
-	"""
+	#=
 	    This function updates the set of particles using the velocity field.
 
 	    	INPUT:
@@ -15,7 +15,7 @@ function updateparticles!( par::Array{Float64}, velo::Array{Float64}, nx::Int64,
 	    	ANNOTATIONS:
 				Needs the Grid.jl pkg to uses CoordInterpGrid.
 				Remember the construction of velocity mesh to reshape and interpolate
-	"""
+	=#
 
   # Variable declaration
   alpha::Float64 = 0.5

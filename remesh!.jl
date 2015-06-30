@@ -1,5 +1,5 @@
 function remesh!(XP::Array{Float64}, X::Array{Float64}, nx::Int64, ngap::Int64, gap::Float64)
-	"""
+	#=
 		This function Re-meshes the mesh on the top subdomain depending on ngap value.
 
 			INPUT:
@@ -13,7 +13,7 @@ function remesh!(XP::Array{Float64}, X::Array{Float64}, nx::Int64, ngap::Int64, 
 
  			ANNOTATIONS:
  				The remesh is based on the intervals projection rule py=(px-x1)/(x2-x1)*(y2-y1)+y1
-	"""
+	=#
 
 	# Variable declaration
   	i::Int64 = 0

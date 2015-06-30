@@ -1,5 +1,5 @@
 function source(xc::Array{Float64}, par::Array{Float64}, sradius::Float64)
-	"""
+	#=
 	    This function computes the source term of the matrix system (K,G)(v,p)=(f).
 
 	    	INPUT:
@@ -9,7 +9,7 @@ function source(xc::Array{Float64}, par::Array{Float64}, sradius::Float64)
 
 	    	OUTPUT:
 	    		f: 			Array of the source term
-	"""
+	=#
 
   g::Float64 = -9.8
   nPar::Int64 = size(par, 1)

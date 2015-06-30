@@ -1,5 +1,5 @@
 function totalmat(X::Array{Float64},T::Array{Float64},XP::Array{Float64},TP::Array{Float64},par::Array{Float64},sradius::Float64)
-	"""
+	#=
 	    This function computes the total components of the system matrix (K,G)(v,p)=(f).
 
 			INPUT:
@@ -15,7 +15,8 @@ function totalmat(X::Array{Float64},T::Array{Float64},XP::Array{Float64},TP::Arr
 	    		G:   		 Gradient matrix
 	    		f:   		 Font vector
 
-	"""
+	=#
+	
   # Variables Declaration
   numel::Int64 = size(T,1)
   nen::Int64 = size(T,2)

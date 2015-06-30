@@ -1,5 +1,5 @@
 function localmat(Xe::Array{Float64},nen::Int64,ndofn::Int64,pospg::Array{Float64},weipg::Array{Float64},N::Array{Float64},Nxi::Array{Float64},Neta::Array{Float64},nenP::Int64,NP::Array{Float64},par::Array{Float64},sradius::Float64)
-	"""
+	#=
 	    This function computes the local components of the system matrix fo FEM: (K,G)(v,p)=(f)
 
 	    	INPUT:
@@ -20,7 +20,7 @@ function localmat(Xe::Array{Float64},nen::Int64,ndofn::Int64,pospg::Array{Float6
 	    		Ke:	  		 Element diffussion matrix
 	    		Ge:   		 Element gradient matrix
 	    		fe:   		 Element font vector
-	"""
+	=#
 
   #Declaration of Variables
   Ke::Array{Float64} = zeros(ndofn,ndofn)

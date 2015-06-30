@@ -1,32 +1,32 @@
 function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
-  """
-  		 This function solves the 2D-Stokes problem in a square 40x40 of Q2Q1-elements with FEM/Mark-in-Cell.
+  #=
+           This function solves the 2D-Stokes problem in a square 40x40 of Q2Q1-elements with FEM/Mark-in-Cell.
 
-  		 	INPUT:
-	    		air:     Boolean to apply the layer
-	    		nx:      Mesh dimensions (nx)x(ny)-elements
-	    		nSteps:	 Number of the time steps
+               INPUT:
+                air:     Boolean to apply the layer
+                nx:      Mesh dimensions (nx)x(ny)-elements
+                nSteps:  Number of the time steps
 
-	    	OUTPUT:
-	    		One data files on ./results/file.data
-	    		One figure of the last map of the particles on ./results/figs/fig.png
+            OUTPUT:
+                One data files on ./results/file.data
+                One figure of the last map of the particles on ./results/figs/fig.png
 
-	    	ANNOTATIONS:
-				Sphere density:  1150
-				Mantle density: 1420
-				Air density: 1.2754
-				Sphere viscosity: 69000
-				Mantle viscosity: 50
-				Air viscosity: 1
-  """
+            ANNOTATIONS:
+                Sphere density:  1150
+                Mantle density: 1420
+                Air density: 1.2754
+                Sphere viscosity: 69000
+                Mantle viscosity: 50
+                Air viscosity: 1
+  =#
 
   ## Initial Data ##
   ##################
   i::Int64 = 0
 
-  visc::Array{Float64} = [50 69000 1] # [mantle viscosity, sphere viscosity, air viscosity]
-  rho::Array{Float64} = [1420 1150 1.2754] # [mantle density, sphere desnity, air density]
-  pto::Array{Float64} = [ 20 5 ] # initial center position of the body
+  visc::Array{Float64} = [50 69000 50] # [mantle viscosity, sphere viscosity, air viscosity]
+  rho::Array{Float64} = [1420 1150 1] # [mantle density, sphere desnity, air density]
+  pto::Array{Float64} = [ 20 20 ] # initial center position of the body
   radius::Float64 = 3 # initial radius of the body
   ppe::Int64 = 30 # particles per element
 
@@ -48,12 +48,13 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
 
   # adding air layer
   gap::Float64 = 0.
-  if air == true
-  		pto[2] = pto[2] - 5
-  		ngap::Int64 = itrunc((1/4)*ny) # number of the elements of the layer in y direction
-  		gap = (1/4)*y2 # y dimensions of the layer
-  		ny = ny + ngap
-  		y2 = y2 + gap
+
+   if air == true
+          pto[2] = pto[2] - 2.5
+          ngap::Int64 = itrunc((1/4)*ny) # number of the elements of the layer in y direction
+          gap = (1/4)*y2 # y dimensions of the layer
+          ny = ny + ngap
+          y2 = y2 + gap
   end
 
   ## Velocity/Pressure coords and connectivity matrixs ##
@@ -69,8 +70,8 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
 
   # Remesh in case of air layer
   if air == true
-	  	remesh!(XP,X,nx,ngap,gap)
-	  	y2 = x2 # recover the dimensions due to the remesh
+          remesh!(XP,X,nx,ngap,gap)
+          y2 = x2 # recover the dimensions due to the remesh
   end
 
   # radius to choose the mean of density and viscosity
@@ -87,13 +88,13 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
   (nPar,par) = setparticles(x1,x2,y2,nx,ny,ppe,radius,visc,rho,pto,air,gap)
 
   if air == true
-   	isurface::Int64 = findfirst(par[:,3] .== 3) # mark the surface for the par
-   	surface::Array{Float64} = zeros(itrunc(sqrt(ppe)*nx)) # height of the set of particles surface
-   	file2 = open("./results/surface_elem"*string(nx)*".dat","w")# createfile
-   	close(file2)
+       isurface::Int64 = findfirst(par[:,3] .== 3) # mark the surface for the par
+       surface::Array{Float64} = zeros(itrunc(sqrt(ppe)*nx)) # height of the set of particles surface
+       file2 = open("./results/surface_elem"*string(nx)*".dat","w")# createfile
+       close(file2)
   else
-  		file1 = open("./results/sigmazz_elem"*string(nx)*".dat","w")# openfile
-  		close(file1)
+          file1 = open("./results/sigmazz_elem"*string(nx)*".dat","w")# openfile
+          close(file1)
   end
 
   ## Number of Nodes and Unknowns ##
@@ -132,66 +133,66 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
   PyPlot.figure(1) # start plotting
 
   for theStep = 1:nSteps
-		 tic()
-		 # draw material map
-		 PyPlot.clf()
-		 PyPlot.subplot(1,2,1,aspect=1)
-		 plotpar(par); # plot the grid particles with materials
-		 PyPlot.plot(XP[:,1],XP[:,2],"ko", alpha=1) # plot nodes
-		 PyPlot.axis([x1, x2, y1, y2])
-		 PyPlot.title("Materials")
+         tic()
+         # draw material map
+         PyPlot.clf()
+         PyPlot.subplot(1,2,1,aspect=1)
+         plotpar(par); # plot the grid particles with materials
+         PyPlot.plot(XP[:,1],XP[:,2],"ko", alpha=1) # plot nodes
+         PyPlot.axis([x1, x2, y1, y2])
+         PyPlot.title("Materials")
 
-		 # compute the matrix components
-		 (K, G, f) = totalmat(X,T,XP,TP,par,sradius)
+         # compute the matrix components
+         (K, G, f) = totalmat(X,T,XP,TP,par,sradius)
 
-		 # boundary conditions for pressure
-		 npf = (nx+1)*(ny+1)
-		 G = G[ [1:end-1], :] # Erase last row
+         # boundary conditions for pressure
+         npf = (nx+1)*(ny+1)
+         G = G[ [1:end-1], :] # Erase last row
 
-		 # global matrix generation with Dirichlet BC
-		 Atot = [K Accd' G'; Accd zeros(nDirichletBC,nDirichletBC) zeros(nDirichletBC,nUnkPre); G zeros(nUnkPre,nDirichletBC) M]
-		 btot = [f; bccd ; zeros(nUnkPre,1)]
+         # global matrix generation with Dirichlet BC
+         Atot = [K Accd' G'; Accd zeros(nDirichletBC,nDirichletBC) zeros(nDirichletBC,nUnkPre); G zeros(nUnkPre,nDirichletBC) M]
+         btot = [f; bccd ; zeros(nUnkPre,1)]
 
-		 aux = Atot\btot # solve the system
+         aux = Atot\btot # solve the system
 
-		 velo = reshape(aux[1:nUnkVel],2,nNodesVel)' # velocity solution
+         velo = reshape(aux[1:nUnkVel],2,nNodesVel)' # velocity solution
 
-		 pres = [aux[(nUnkVel+nDirichletBC+1):end]; 0] # pressure solution
+         pres = [aux[(nUnkVel+nDirichletBC+1):end]; 0] # pressure solution
 
-		 # draw Velocity Field
-		 PyPlot.subplot(1,2,2,aspect=1)
-		 PyPlot.quiver(X[:,1],X[:,2],velo[:,1],velo[:,2],1)
-		 PyPlot.title("Velocity Field")
+         # draw Velocity Field
+         PyPlot.subplot(1,2,2,aspect=1)
+         PyPlot.quiver(X[:,1],X[:,2],velo[:,1],velo[:,2],1)
+         PyPlot.title("Velocity Field")
 
-		 PyPlot.savefig("./results/figs/map"*string(nx)*".png",dpi=250)
+         PyPlot.savefig("./results/figs/map"*string(nx)*".png",dpi=250)
 
-		 if air == true
-	 		rank2m = (isurface-2*itrunc(sqrt(ppe)*nx)):(isurface-itrunc(sqrt(ppe)*nx)-1)
-	 		rank1m = (isurface-itrunc(sqrt(ppe)*nx)):(isurface-1)
-	 		rank1a = (isurface):(isurface+itrunc(sqrt(ppe)*nx)-1)
-	 		rank2a = (isurface+itrunc(sqrt(ppe)*nx)):(isurface+2*itrunc(sqrt(ppe)*nx)-1)
-	 		surfacemean = ( par[rank2m,2] .+ par[rank1m,2] .+ par[rank2a,2] .+ par[rank1a,2]  )./4
-	 		surface = [surface surfacemean ] # mean of the 2 first air/mantle rows
-	 		file2 = open("./results/surface_elem"*string(nx)*".dat","a")# openfile
-	 		writedlm(file2, surfacemean',"\t") # write in file
-	 		close(file2)
-		 else
-	 		# compute stresses on the top boundary
-	 		sigmazze = compstress(velo,pres,X,T,TP,par,nx,sradius);
-	 		sigmazz = [sigmazz sigmazze] # the 1st row are zeros
-	 		file1 = open("./results/sigmazz_elem"*string(nx)*".dat","a")
-	 		writedlm(file1, sigmazze',"\t") # write in file
-	 		close(file1)
-		 end
+         if air == true
+             rank2m = (isurface-2*itrunc(sqrt(ppe)*nx)):(isurface-itrunc(sqrt(ppe)*nx)-1)
+             rank1m = (isurface-itrunc(sqrt(ppe)*nx)):(isurface-1)
+             rank1a = (isurface):(isurface+itrunc(sqrt(ppe)*nx)-1)
+             rank2a = (isurface+itrunc(sqrt(ppe)*nx)):(isurface+2*itrunc(sqrt(ppe)*nx)-1)
+             surfacemean = ( par[rank2m,2] .+ par[rank1m,2] .+ par[rank2a,2] .+ par[rank1a,2]  )./4
+             surface = [surface surfacemean ] # mean of the 2 first air/mantle rows
+             file2 = open("./results/surface_elem"*string(nx)*".dat","a")# openfile
+             writedlm(file2, surfacemean',"\t") # write in file
+             close(file2)
+         else
+             # compute stresses on the top boundary
+             sigmazze = compstress(velo,pres,X,T,TP,par,nx,sradius);
+             sigmazz = [sigmazz sigmazze] # the 1st row are zeros
+             file1 = open("./results/sigmazz_elem"*string(nx)*".dat","a")
+             writedlm(file1, sigmazze',"\t") # write in file
+             close(file1)
+         end
 
-		 # move particles
-		 updateparticles!(par,velo,nx,ny,x1,x2,y1,y2,rad)
+         # move particles
+         updateparticles!(par,velo,nx,ny,x1,x2,y1,y2,rad)
 
-		 # show the computational time
-		 timestep = toq()
-		 time = time + timestep
-		 timestep = round(nSteps*timestep-theStep*timestep,2)
-		 print_with_color(:black,"Time: "*string(timestep)*" s (Total:"*string(time)*")\n")
+         # show the computational time
+         timestep = toq()
+         time = time + timestep
+         timestep = round(nSteps*timestep-theStep*timestep,2)
+         print_with_color(:black,"Time: "*string(timestep)*" s (Total:"*string(time)*")\n")
 
 
   end
@@ -201,9 +202,9 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
   ##################
 
   if air == true
-  	  plotlayer(x1,x2,surface,ppe,nx,nSteps)
+        plotlayer(x1,x2,surface,ppe,nx,nSteps)
   else
-  	  plotfix(sigmazz,nx,nSteps,rho,x2)
+        plotfix(sigmazz,nx,nSteps,rho,x2)
   end
 
   ## End of the the function ##

@@ -1,5 +1,6 @@
 function compstress(velo::Array{Float64},pres::Array{Float64},X::Array{Float64},T::Array{Float64},TP::Array{Float64},par::Array{Float64},nx::Int64,sradius::Float64)
-	"""
+	#=
+
 	    This function recovers the sigmazz on the top of the boundary using a new gauss points.
 
 	    	INPUT:
@@ -14,7 +15,8 @@ function compstress(velo::Array{Float64},pres::Array{Float64},X::Array{Float64},
 
 	    	ANNOTATIONS:
 				sigma(z,z) = -(pressure)*NP_boundary+2*(visc)*N_boundary*(diff(velo))
-	"""
+				=#
+
 
 	# Variable declaration
 	sigmazz::Array{Float64} = []
