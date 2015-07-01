@@ -12,6 +12,8 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
                 One figure of the last map of the particles on ./results/figs/fig.png
 
             ANNOTATIONS:
+                Mandatory sqare domain. All code is writed taking in account this fact.
+
                 Sphere density:  1150
                 Mantle density: 1420
                 Air density: 1
@@ -25,8 +27,8 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
   i::Int64 = 0
 
   visc::Array{Float64} = [50 69000 50] # [mantle viscosity, sphere viscosity, air viscosity]
-  rho::Array{Float64} = [1420 1150 0] # [mantle density, sphere desnity, air density]
-  pto::Array{Float64} = [ 20 5 ] # initial center position of the body
+  rho::Array{Float64} = [1420 1150 1] # [mantle density, sphere desnity, air density]
+  pto::Array{Float64} = [ 20 25 ] # initial center position of the body
   radius::Float64 = 3 # initial radius of the body
   ppe::Int64 = 30 # particles per element
 
@@ -50,11 +52,12 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
   gap::Float64 = 0.
 
    if air == true
-          pto[2] = pto[2] - 2.5
-          ngap::Int64 = itrunc((1/4)*ny) # number of the elements of the layer in y direction
-          gap = (1/4)*y2 # y dimensions of the layer
-          ny = ny + ngap
-          y2 = y2 + gap
+          #pto[2] = pto[2] - 5
+          # Auxiliar variables to remesh
+          #ngap::Int64 = itrunc((1/4)*ny) # number of the elements of the layer in y direction
+          #gap = (1/4)*y2 # y dimensions of the layer
+          #ny = ny + ngap
+          #y2 = y2 + gap
   end
 
   ## Velocity/Pressure coords and connectivity matrixs ##
@@ -69,10 +72,10 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
   (XP,TP) = mpresnod(X,T,nx,ny,nenP)
 
   # Remesh in case of air layer
-  if air == true
+  #=if air == true
           remesh!(XP,X,nx,ngap,gap)
           y2 = x2 # recover the dimensions due to the remesh
-  end
+  end=#
 
   # radius to choose the mean of density and viscosity
   Te::Array{Float64} = vec(T[end,:])
@@ -185,7 +188,7 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
          end
 
          # move particles
-         updateparticles!(par,velo,nx,ny,x1,x2,y1,y2,rad)
+         updateparticles!(X,par,velo,nx,ny,x1,x2,y1,y2,rad)
 
          # show the computational time
          timestep = toq()

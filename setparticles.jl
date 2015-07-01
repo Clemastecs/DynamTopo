@@ -43,7 +43,8 @@ function setparticles(x1::Int64, x2::Int64, y2::Int64, nx::Int64, ny::Int64, ppe
 	# Air layer
 	if air == true
 		# Properties of the particles
-		ix = find(par[:,2] .> (y2-gap/2)) # air layer
+		#ix = find(par[:,2] .> (y2-gap/2)) # remeshed air layer
+		ix = find(par[:,2] .> 35 )# no remeshed air layer case 40x40 only
 		par[ix,3] = 3
 		# density/viscosity of the air layer particles
 		par[ix,4] = rho[3]

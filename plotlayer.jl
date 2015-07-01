@@ -31,19 +31,22 @@ function plotlayer(x1::Int64, x2::Int64, surface::Array{Float64}, ppe::Int64, nx
 	PyPlot.xlabel("Surface")
 	PyPlot.title("Geological Height with layer")
 	for i = 2:nSteps-1
-		coef = polyfit(sdom,surface[:,i]-surface[:,2],4)
-		p(x) = coef[5].*x.^4+coef[4].*x.^3+coef[3].*x.^2+coef[2].*x+coef[1]
-		maxh[i] = p(20)
-
+		#coef = polyfit(sdom,surface[:,i],4)
+		#p(x) = coef[5].*x.^4+coef[4].*x.^3+coef[3].*x.^2+coef[2].*x+coef[1]
+		#maxh[i] = p(20)
 		#PyPlot.plot(x,p(x),linewidth=1.2, alpha= alpha[i], antialiased=true, color="red")
-		PyPlot.plot(sdom,surface[:,i]-surface[:,2], linewidth=1.2, alpha= alpha[i], antialiased=true, color="red")
-	end
-	coef = polyfit(sdom,surface[:,i+1]-surface[:,2],4)
-	p(x) = coef[5].*x.^4+coef[4].*x.^3+coef[3].*x.^2+coef[2].*x+coef[1]
-	maxh[i+1] = p(20)
 
+		maxh[i] = maximum(surface[:,i])
+		PyPlot.plot(sdom,surface[:,i], linewidth=1.2, alpha= alpha[i], antialiased=true, color="red")
+	end
+	#coef = polyfit(sdom,surface[:,i+1],4)
+	#p(x) = coef[5].*x.^4+coef[4].*x.^3+coef[3].*x.^2+coef[2].*x+coef[1]
+	#maxh[i+1] = p(20)
 	#PyPlot.plot(x,p(x),linewidth=2, alpha= 1, antialiased=true,color="black")
-	PyPlot.plot(sdom,surface[:,i+1]-surface[:,2], linewidth=2, alpha= 1, antialiased=true,color="black")
+
+	maxh[i+1] = maximum(surface[:,i+1])
+	PyPlot.plot(sdom,surface[:,i+1], linewidth=2, alpha= 1, antialiased=true,color="black")
+
 	PyPlot.grid()
 
 
