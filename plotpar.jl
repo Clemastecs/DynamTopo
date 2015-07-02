@@ -19,5 +19,4 @@ function plotpar(par::Array{Float64})
 
 	p = par[par[:,3].==3,:];
 	PyPlot.plot( p[:,1], p[:,2],"c.", alpha= 0.6, antialiased=true)
-
 end

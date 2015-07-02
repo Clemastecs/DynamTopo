@@ -43,5 +43,4 @@ function remesh!(XP::Array{Float64}, X::Array{Float64}, nx::Int64, ngap::Int64, 
   	for i = (size(X,1)-(2*nx+1)*(4*ngap+1)+1):size(X,1)
   		X[i,2] = (X[i,2]-x1)/(x2-x1) * (y2-y1) + y1
   	end
-
 end

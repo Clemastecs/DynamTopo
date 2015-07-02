@@ -92,4 +92,5 @@ function compstress(velo::Array{Float64},pres::Array{Float64},X::Array{Float64},
 	end
 
 	return sigmazz
+	
 end

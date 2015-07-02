@@ -40,5 +40,4 @@ function bcfreeslip(X::Array{Float64},nunk::Int64)
   bccd = C[:,2]
 
   return Accd, bccd
-
 end

@@ -63,5 +63,4 @@ function plotfix(sigmazz::Array{Float64}, nx::Int64, nSteps::Int64, rho::Array{F
 	  print_with_color(:green,"h max: "*string(maxh[end])*"\n")
 
 	  #PyPlot.savefig("Geo_High.jpg") #save the plot in file
-
 end

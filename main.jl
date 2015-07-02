@@ -44,7 +44,6 @@ include("recoverdata.jl")
 
 air=bool(true)
 
-
 print_with_color(:blue,"====>\n")
 print_with_color(:blue," (i) Input Stokes(n,nSteps) to run a nSteps time steps simulation in a domain of [0,40]x[0,40] with (n)x(n) Q2Q1-elements with aprox. 30 particles for each one\n")
 print("\n")

@@ -9,7 +9,7 @@ function quadrature()
 	    		weipg:   Weigth of the Gauss points on reference element
 
 	=#
-	
+
   pos1::Float64 = sqrt(3/5)
   pospg::Array{Float64}=[-pos1   -pos1;
                              0   -pos1;
@@ -26,5 +26,4 @@ function quadrature()
   weipg::Array{Float64} = [pg1*pg1 pg2*pg1 pg3*pg1 pg1*pg2 pg2*pg2 pg3*pg2 pg1*pg3 pg2*pg3 pg3*pg3]
 
   return pospg, weipg
-
 end

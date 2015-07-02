@@ -213,5 +213,4 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
   #############################
 
   print_with_color(:green,"Successful computation.\n")
-
 end

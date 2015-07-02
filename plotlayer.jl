@@ -78,5 +78,4 @@ function polyfit(x::Array{Float64}, y::Array{Float64}, n::Int64)
 
    A = [ float(x[i])^p for i = 1:length(x), p = 0:n ]
    return A \ y
-
 end

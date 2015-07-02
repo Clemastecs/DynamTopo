@@ -87,5 +87,4 @@ function localmat(Xe::Array{Float64},nen::Int64,ndofn::Int64,pospg::Array{Float6
   end
 
   return Ke, Ge, fe;
-
 end

@@ -62,4 +62,5 @@ function totalmat(X::Array{Float64},T::Array{Float64},XP::Array{Float64},TP::Arr
   end
 
   return K, G, f
+  
 end

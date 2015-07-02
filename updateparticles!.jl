@@ -39,4 +39,5 @@ function updateparticles!(X::Array{Float64}, par::Array{Float64}, velo::Array{Fl
 
   # Euler explicit (y_n=y_n+dt*f(y_n))
   par[:,1:2] = par[:,1:2] + [vx_i vy_i] * dt
+  
 end
