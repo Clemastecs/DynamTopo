@@ -1,6 +1,6 @@
 # Dynamical Topography
 
-A workspace to compute a Stokes' model for dynamical topography, combining FEM/Marker-in-Cell.
+A workspace to compute a Stokes' model for dynamical topography (combined FEM/Marker-in-Cell method).
 
 ##Input:
 
@@ -38,7 +38,7 @@ This simulation needs the large number of elements to works fine. It is mandator
 
 ## Future releases
 
-	- Re-meshing the domain with a non-regular mesh with more definition in a neighbourhood of the boundary between the "sticky" air layer and the mantle (It needs a non-regular grid's interpolation).
+- Re-meshing the domain with a non-regular mesh with more definition in a neighbourhood of the boundary between the "sticky" air layer and the mantle (It needs a non-regular grid's interpolation).
 
 ## Modifying the Code
 
