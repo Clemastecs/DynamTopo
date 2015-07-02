@@ -1,6 +1,6 @@
 # Dynamical Topography
 
-A workspace to compute a Stokes' model for dynamical topography.
+A workspace to compute a Stokes' model for dynamical topography, combining FEM/Marker-in-Cell.
 
 ##Input:
 
@@ -14,11 +14,11 @@ Once the main code is loaded just input:
 
 where ***n*** is the dimension of the mesh (n)x(n) with Q2Q1-elements. Each element contains ***ppe*** particles and ***nSteps*** are the time steps.
 
-Alternatively(It does not work properly):
+Alternatively:
 
 	julia > Stokes(n,nSteps,air)
 
-where ***air*** adds a layer of air on the top of the domain.
+where ***air*** adds a layer of "sticky" air on the top of the domain.
 
 ##Output
 
@@ -32,12 +32,20 @@ It is possible to recover the final height-plots using:
 
 where ***n*** is the dimension of the mesh (n)x(n) (specified in the name of the file) and ***case*** is 1 for the *Fixed* case and 2 for the *Air Layer* case.
 
+## Annotations
+
+This simulation needs the large number of elements to works fine. It is mandatory uses a square domain.
+
+## Future releases
+
+	- Re-meshing the domain with a non-regular mesh with more definition in a neighbourhood of the boundary between the "sticky" air layer and the mantle (It needs a non-regular grid's interpolation).
+
 ## Modifying the Code
+
 You can change the following data modifying it in Stokes.jl source code and reloading the main code *main.jl*:
 
 Warning with these variations, the code is not plenty tested.
 
-- The domain ***x1,x2,y1,y2*** (default: 40x40, mandatory square)
 - The number of particles per element ***ppe*** (default: 30)
 - The position and the radius of the sphere ***pto, radius***
 - The densities ***rho*** and the viscosities ***visc*** (default: (1420,1150), (50,69000))

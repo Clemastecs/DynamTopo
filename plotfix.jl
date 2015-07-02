@@ -45,9 +45,9 @@ function plotfix(sigmazz::Array{Float64}, nx::Int64, nSteps::Int64, rho::Array{F
 
 	  # plot height in each step
 	  PyPlot.subplot(2,2,3)
-	  PyPlot.ylabel("Height h")
+	  PyPlot.ylabel("h")
 	  PyPlot.xlabel("Surface")
-	  PyPlot.title("Geological Height")
+	  PyPlot.title("Elevation")
 	  for i=2:nSteps-1
 	  		PyPlot.plot(sigmadom,h[:,i], linewidth=1.2, alpha= alpha[i], antialiased=true, color="red")
 	  end
@@ -57,7 +57,7 @@ function plotfix(sigmazz::Array{Float64}, nx::Int64, nSteps::Int64, rho::Array{F
 	  PyPlot.subplot(2,2,4)
 	  PyPlot.ylabel("Max h")
 	  PyPlot.xlabel("Steps")
-	  PyPlot.title("Maximum Height")
+	  PyPlot.title("Max. elevation")
 	  PyPlot.plot([2:nSteps], maxh[2:end], linewidth=2,color="red")
 	  PyPlot.grid()
 	  print_with_color(:green,"h max: "*string(maxh[end])*"\n")

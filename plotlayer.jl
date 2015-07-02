@@ -27,9 +27,9 @@ function plotlayer(x1::Int64, x2::Int64, surface::Array{Float64}, ppe::Int64, nx
 	PyPlot.figure(3)
 	PyPlot.clf()
 	PyPlot.subplot(1,2,1)
-	PyPlot.ylabel("Height h")
+	PyPlot.ylabel("h")
 	PyPlot.xlabel("Surface")
-	PyPlot.title("Geological Height with layer")
+	PyPlot.title("Elevation with sticky air")
 	for i = 2:nSteps-1
 		#coef = polyfit(sdom,surface[:,i],4)
 		#p(x) = coef[5].*x.^4+coef[4].*x.^3+coef[3].*x.^2+coef[2].*x+coef[1]
@@ -53,7 +53,7 @@ function plotlayer(x1::Int64, x2::Int64, surface::Array{Float64}, ppe::Int64, nx
 	PyPlot.subplot(1,2,2)
 	PyPlot.ylabel("Max h")
 	PyPlot.xlabel("Steps")
-	PyPlot.title("Maximum Height")
+	PyPlot.title("Max. elevation")
 	PyPlot.plot([2:nSteps], maxh[2:end], linewidth=2, color="red")
 	PyPlot.grid()
 

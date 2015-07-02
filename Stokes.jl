@@ -26,9 +26,9 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
   ##################
   i::Int64 = 0
 
-  visc::Array{Float64} = [50 69000 50] # [mantle viscosity, sphere viscosity, air viscosity]
+  visc::Array{Float64} = [50 69000 1] # [mantle viscosity, sphere viscosity, air viscosity]
   rho::Array{Float64} = [1420 1150 1] # [mantle density, sphere desnity, air density]
-  pto::Array{Float64} = [ 20 25 ] # initial center position of the body
+  pto::Array{Float64} = [ 20 30 ] # initial center position of the body
   radius::Float64 = 3 # initial radius of the body
   ppe::Int64 = 30 # particles per element
 
@@ -52,7 +52,7 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
   gap::Float64 = 0.
 
    if air == true
-          #pto[2] = pto[2] - 5
+          pto[2] = pto[2] - 5
           # Auxiliar variables to remesh
           #ngap::Int64 = itrunc((1/4)*ny) # number of the elements of the layer in y direction
           #gap = (1/4)*y2 # y dimensions of the layer
@@ -194,7 +194,7 @@ function Stokes(nx::Int64 = 10, nSteps::Int64 = 20, air::Bool = false)
          timestep = toq()
          time = time + timestep
          timestep = round(nSteps*timestep-theStep*timestep,2)
-         print_with_color(:black,"Time: "*string(timestep)*" s (Total:"*string(time)*")\n")
+         print_with_color(:black,"Left Time: "*string(timestep)*" s [Elapsed:"*string(time)*" s]\n")
 
 
   end
